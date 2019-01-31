@@ -1,15 +1,7 @@
 
 
-
-
 import math
-
-
-def gcd(x, y):
-    pass
-
-def lcm(x, y):
-    pass
+from functools import reduce
 
 
 def divisors(n):
@@ -24,7 +16,7 @@ def prime_divisors(n):
         n /= 2
 
     # n now odd
-    for i in range(3, int(math.sqrt(n)) + 1):
+    for i in range(3, int(math.sqrt(n)) + 1, 2):
         while n % i == 0:
             p_div.append(i)
             n /= i
@@ -65,6 +57,21 @@ def is_prime(n):
 def sieve_of_eras():
     pass
 
+"""
+https://stackoverflow.com/questions/15347174/python-finding-prime-factors
+
+if n<=2:
+        return []
+    sieve=[True]*(n+1)
+    for x in range(3,int(n**0.5)+1,2):
+        for y in range(3,(n//x)+1,2):
+            sieve[(x*y)]=False
+
+    return [2]+[i for i in range(3,n,2) if sieve[i]]
+
+"""
+
+
 
 # Korselt's criterion
 # Theorem (A. Korselt 1899): A positive composite integer n is a Carmichael number if and only if 
@@ -94,14 +101,24 @@ def is_carmichael(n):
     return True
 
 
+################################################################################
 
-for n in range(1, 101, 2):
-    print("n = {} {}".format(n, is_prime(n)))
+print("\nChecking for prime numbers up to 100:")
+for n in range(1, 101):
+    if is_prime(n):
+        print(n)
 
-print("\nChecking for Carmichael numbers up to 10,000:")
-for n in range(1, 10001):
+print("\nChecking for Carmichael numbers up to 100,000:")
+for n in range(1, 100001):
     if is_carmichael(n):
-        print("{}".format(n))
+        print(n)
+
+n = 600851475143
+p_div = prime_divisors(n)
+print("\nPrime factors of {}: {}".format(n, p_div))
+
+product = reduce(lambda x, y: x*y, p_div)
+print("Verifying product of prime factors is: {}".format(product))
 
 
 
