@@ -1,5 +1,5 @@
 """
-This solves LC279 Perfect Squares in a mathematical way.
+This solves LC279 Perfect Squares using number theory.
 
 Theory:
 
@@ -89,7 +89,6 @@ def sum_of_two_squares2(n : int) -> bool:
 
     return any(is_square(n - i*i) for i in range(1, end))
 
-
 """
 Legendre's three-square theorem: a natural number can be represented as the 
 sum of three squares (including 0 squares) if and only if n is not of the form 
@@ -104,24 +103,22 @@ four positive squares.
 
 If legendre_form(n) == True, then n is the sum of four positive squares.
 """
-def sum_of_four_squares(n: int) -> bool: # aka legendre_form()
-    if n < 7:
-        return False
-
-    while n % 4 == 0:
-        n //= 4
-
-    return n % 8 == 7
-
-def sum_of_four_squares2(n: int) -> bool:
+def sum_of_four_squares(n: int) -> bool:
+    # Assume n > 0.
     while (n & 3) == 0: # n % 4 == 0
         n >>= 2 # n //= 4
 
     return (n & 7) == 7 # n % 8 == 7
 
+def sum_of_four_squares2(n: int) -> bool: # aka legendre_form()
+    # Assume n > 0.
+    while n % 4 == 0:
+        n //= 4
+
+    return n % 8 == 7
+
 """
-Quick check using number theory and math functions.
-This can be generalized.
+Returns minimum number of positive squares that add up to given integer n.
 """
 def num_squares(n: int) -> int:
     if is_square(n):
@@ -151,7 +148,7 @@ if __name__ == "__main__":
 
     d = {1: [], 2: [], 3: [], 4: []}
 
-    for i in range(100):
+    for i in range(1000):
         n_sq = num_squares(i)
         d[n_sq].append(i)
 
